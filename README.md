@@ -42,7 +42,9 @@ Node 的交互式解释器可以很好的调试 Javascript 代码。
 事件驱动程序
 Node.js 使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务下一个web请求。
 当这个请求完成，它被放回处理队列，当到达队列开头，这个结果被返回给用户。
-<img src="http://www.runoob.com/wp-content/uploads/2015/09/event_loop.jpg">
+
+<img src="http://www.runoob.com/wp-content/uploads/2015/09/event_loop.jpg">  
+
 这个模型非常高效可扩展性非常强，因为webserver一直接受请求而不等待任何读写操作。（这也被称之为非阻塞式IO或者事件驱动IO）
 在事件驱动模型中，会生成一个主循环来监听事件，当检测到事件时触发回调函数。
 
