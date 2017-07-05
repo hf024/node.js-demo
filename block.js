@@ -6,6 +6,7 @@
 
 var fs = require('fs');
 
+//阻塞式读取文件
 var data = fs.readFileSync('input.txt');
 
 console.log(data.toString());

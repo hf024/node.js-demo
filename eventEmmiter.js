@@ -42,7 +42,7 @@ eventEmitter.emit('connection');
 //or
 eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
 console.log(eventListeners + " listeners is connecting to this event");
-console.log('program is end');
+console.log('程序结束');
 
 
 

@@ -26,7 +26,7 @@ var connectHandler = function connected(){
 
     //触发data_received事件
     eventEmitter.emit('data_received');
-}
+};
 
 //绑定connection事件处理程序
 eventEmitter.on('connection', connectHandler);

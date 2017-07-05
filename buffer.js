@@ -8,6 +8,7 @@
 //方法1 数字
 var buf1 = new Buffer(10);
 len1 = buf1.write('write buf1 content');
+
 //从缓冲区读取数据
 //返回值：解码缓冲区数据并使用指定的编码返回字符
 console.log('buf1:' + buf1.toString());

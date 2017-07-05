@@ -1,9 +1,8 @@
 /**
  * Created by apple on 2017/7/4.
  */
-
 //step1 引入required模块
-    // 使用 require 指令来载入 node.js自带的 http 模块，并将实例化的 HTTP 赋值给变量 http，实例如下:
+// 使用 require 指令来载入 node.js自带的 http 模块，并将实例化的 HTTP 赋值给变量 http，实例如下:
 var http = require('http');
 
 //step2 创建服务器

@@ -3,7 +3,6 @@
  * Author: apple
  * Date: 2017/7/4.
  */
-
 var fs = require('fs');
 
 //因此，阻塞是按顺序执行的，而非阻塞是不需要按顺序的，

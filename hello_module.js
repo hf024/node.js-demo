@@ -19,4 +19,5 @@ function Hello(){
     }
 }
 
+//模块公开接口，将整个对象公开
 module.exports = Hello;

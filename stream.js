@@ -62,17 +62,19 @@ var zlib = require('zlib');
 
 //压缩input.txt文件为input.gz
 var wCompressStream = fs.createWriteStream('input.txt.gz');
+
 wCompressStream.on('finish',function(){
     console.log('file compress end');
 
+    //压缩结束之后，再解压input.gz
     fs.createReadStream('input.txt.gz')
         .pipe(zlib.createGunzip())
         .pipe(fs.createWriteStream('input_decompress.txt'));
 
     console.log('file decompress end');
 });
+
 rdStream.pipe(zlib.createGzip()).pipe(wCompressStream);
 
 
-//解压input.gz 为input_decompress.txt;
 
