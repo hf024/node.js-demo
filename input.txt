@@ -1,2 +1,1 @@
-
-node.js 练习demo 输入文件
+input file for test

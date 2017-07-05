@@ -51,6 +51,79 @@ Node.js 使用事件驱动模型，当web server接收到请求，就把它关�
 整个事件驱动的流程就是这么实现的，非常简洁。有点类似于观察者模式，事件相当于一个主题(Subject)，而所有注册到这个事件上的处理函数相当于观察者(Observer)。
 Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件，如下实例：
 
+## EventEmitter 类
+Node.js 所有的异步I/O操作在完成时都会发送一个事件到事件队列
+Node.js 里面的许多对象都会分发事件，所有这些产生事件的对象都是events.EventEmiter的实例
+
+events 模块只提供了一个对象： events.EventEmitter
+
+EventEmitter 的核心就是事件触发与事件监听器功能的封装，比如：
+* EventEmitter 对象如果在实例化时发生错误，会触发error事件
+* 当添加新的监听器时，newListener事件会触发
+* 当监听器被移除时，removeListener事件被触发
+
+Emitter提供了很多属性
+1 方法
+* on(event,listener)&nbsp;绑定事件函数，为指定事件注册一个监听器，接收一个字符串event(事件名)和一个回调函数
+* emit(event)&nbsp;触发事件
+* addListener(event,listener)&nbsp;为指定事件添加一个监听器到监听器数组的尾部
+* once(event,listener)&nbsp;为指定事件注册一个单词监听器，即监听器最多只会触发一次，触发后立即解除该监听器(如:connection)
+* removeListener(event,listener)&nbsp;移除指定事件的某个监听器（该监听器必须是已经注册过的）
+* removeAllListeners(\[evert\])&nbsp;移除所有事件的所有监听器，如果指定了事件event，则移除指定事件的所有监听器
+* setMaxListeners(n)&nbsp;默认，EventEmitters支持10个监听器（多了，会给出警告信息），通过该函数可提高默认的监听器数量限制
+* listener(event)&nbsp;返回指定事件的监听器数组
+* emit（event,\[arg1\],\[arg2\],\[...\])&nbsp;按参数的顺序执行每个监听器，如果事件有注册监听返回true，否则返回false
+注意：on 和 addListener 方法其实是一样的 [点击查看](https://github.com/nodejs/node/blob/v1.x/lib/events.js#L244)
+
+2 类方法  
+* listenerCount(emitter, event)&bnsp;返回指定事件的监听器数量
+
+3 事件
+* newListener&nbsp;该事件在添加新监听器时被触发
+* removeListener&nbsp;从指定监听器数组中删除一个监听器，会改变被删除监听器之后的那些监听器的索引  
+
+error 事件
+EventEmitter 定义了一个特殊的事件 error，它包含了错误的语义，我们在遇到 异常的时候通常会触发 error 事件。
+当 error 被触发时，EventEmitter 规定如果没有响 应的监听器，Node.js 会把它当作异常，退出程序并输出错误信息。
+我们一般要为会触发 error 事件的对象设置监听器，避免遇到错误后整个程序崩溃
+
+继承 EventEmitter
+大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、 http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。
+为什么要这样做呢？原因有两点：
+首先，具有某个实体功能的对象实现事件符合语义， 事件的监听和发射应该是一个对象的方法。
+其次 JavaScript 的对象机制是基于原型的，支持 部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。
+
+EeventEmitter方法的定义，[在此查看](https://github.com/nodejs/node/blob/v1.x/lib/events.js)
+
+## Buffer类
+在处理TCP流、文件流时，必须使用到二进制数据，而javascript本身没有二进制数据类型，因此，在Node.js中，
+定义了一个Buffer类，该类用来创建一个专门存放二进制数据的缓存区
+
+在Node.js中，Buffer类时随Node内核一起发布的核心库。Buffer库为Node.js带来了一种存储原始数据的方法，可以让Node.js处理二进制数据。
+每当Node.js需要处理I/O操作中移动的数据时，就有可能使用Buffer库。
+原始数据存储在Buffer类的实例中，一个Buffer类似一个整数数组，但它对应V8堆内存之外的一块原始内存
+
+## Stream (流)
+Stream 是一个抽象接口，Node 中有很多对象实现了这个接口。例如，对http 服务器发起请求的request 对象就是一个 Stream，还有stdout（标准输出）。
+Node.js，Stream 有四种流类型：
+* Readable - 可读操作。
+* Writable - 可写操作。
+* Duplex - 可读可写操作.
+* Transform - 操作被写入数据，然后读出结果。
+
+所有的 Stream 对象都是 EventEmitter 的实例。常用的事件有：
+* data - 当有数据可读时触发。
+* end - 没有更多的数据可读时触发。
+* error - 在接收和写入过程中发生错误时触发。
+* finish - 所有数据已被写入到底层系统时触发。
+
+## 模块系统
+为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统。
+模块是Node.js 应用程序的基本组成部分，文件和模块是一一对应的。
+换言之，一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。
+
+Node.js 提供了exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。
+
 ## 参考资料
 
 * [node英文网](https://nodejs.org/)
