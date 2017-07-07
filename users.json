@@ -1,0 +1,22 @@
+{
+  "user1":{
+    "name": "Ash",
+    "password": "siUGgID",
+    "id": 1
+  },
+  "user2":{
+    "name": "Beta",
+    "password": "iLLGHENCH",
+    "id": 2
+  },
+  "user3":{
+    "name": "David",
+    "password": "Ilhgalgiej",
+    "id": 3
+  },
+  "user4":{
+    "name": "Maiga",
+    "password": "IGLGIRI3U",
+    "id": 4
+  }
+}

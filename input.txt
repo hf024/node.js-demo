@@ -1,1 +1,1 @@
-input file for test
+我是通过fs.writeFile写入的文件内容

@@ -124,6 +124,127 @@ Node.js，Stream 有四种流类型：
 
 Node.js 提供了exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。
 
+## 全局对象
+JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其所有属性都可以在程序的任何地方访问，即全局变量。
+在浏览器 JavaScript 中，通常 window 是全局对象， 而 Node.js 中的全局对象是 global，所有全局变量（除了 global 本身以外）都是 global 对象的属性。
+在 Node.js 我们可以直接访问到 global 的属性，而不需要在应用中包含它。
+
+全局对象与全局变量
+global 最根本的作用是作为全局变量的宿主。按照 ECMAScript 的定义，满足以下条 件的变量是全局变量：
+* 在最外层定义的变量；
+* 全局对象的属性；
+* 隐式定义的变量（未定义直接赋值的变量）。
+当你定义一个全局变量时，这个变量同时也会成为全局对象的属性，反之亦然。需要注 意的是，在 Node.js 中你不可能在最外层定义变量，因为所有用户代码都是属于当前模块的， 而模块本身不是最外层上下文。
+
+*注意： 永远使用 var 定义变量以避免引入全局变量，因为全局变量会污染 命名空间，提高代码的耦合风险。*
+
+
+## 常用工具 util  
+   util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能 过于精简的不足。
+   * util.inherits(constructor, superConstructor)  
+     是一个实现对象间原型继承的函数。JavaScript 的面向对象特性是基于原型的，与常见的基于类的不同。JavaScript 没有 提供对象继承的语言级别特性，而是通过原型复制来实现的。
+   * util.inspect  
+   是一个将任意对象转换为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。
+   showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。
+   depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归2层，指定为 null 表示将不限递归层数完整遍历对象。 如果color 值为 true，输出格式将会以ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。
+   特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对 象定义了toString 方法也不会调用。
+   * util.isArray(object)  
+     如果给定的参数 "object" 是一个数组返回true，否则返回false。
+   * util.isRegExp(object)  
+     如果给定的参数 "object" 是一个正则表达式返回true，否则返回false。
+   * util.isDate(object)  
+     如果给定的参数 "object" 是一个日期返回true，否则返回false。
+   * util.isError(object)  
+     如果给定的参数 "object" 是一个错误对象返回true，否则返回false。
+   [更多内容](https://nodejs.org/api/util.html)
+
+## 文件系统
+   Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。 
+### 异步和同步
+   Node.js文件系统(fs模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。
+   异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。
+   建议大家是用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。
+   [更多内容](https://nodejs.org/api/fs.html#fs_fs_rename_oldpath_newpath_callback)
+### 文件系统的方法  
+   * open 打开文件
+   * stat 获取文件信息
+   * writeFile 写入文件
+   * readFile 读取文件
+   
+## GET/POST请求
+
+## 工具模块  
+   * OS    [基本的系统操作函数](http://www.runoob.com/nodejs/nodejs-os-module.html)
+   * Path  [处理和转换文件路的工具](http://www.runoob.com/nodejs/nodejs-path-module.html)
+   * Net   [用于底层的网络通信，提供服务端和客户端的操作](http://www.runoob.com/nodejs/nodejs-net-module.html)
+   * DNS   [用于解析域名](http://www.runoob.com/nodejs/nodejs-dns-module.html)
+   * Domain [简化异步代码的异常处理，可以捕捉处理try catch无法捕捉到的](http://www.runoob.com/nodejs/nodejs-domain-module.html)
+
+## web模块
+   * 服务器
+   http.createServer(function (request, response)  {});
+   
+   * 客户端
+   http.request(options, callback);
+
+## Express 框架
+   Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。
+   使用 Express 可以快速地搭建一个完整功能的网站。
+   Express 框架核心特性：
+   * 可以设置中间件来响应 HTTP 请求。
+   * 定义了路由表用于执行不同的 HTTP 请求动作。
+   * 可以通过向模板传递参数来动态渲染 HTML 页面。
+### 安装 Express
+   安装 Express 并将其保存到依赖列表中：
+   $ cnpm install express --save
+   以上命令会将 Express 框架安装在当前目录的 node_modules 目录中， node_modules 目录下会自动创建 express 目录。以下几个重要的模块是需要与 express 框架一起安装的：
+body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。
+cookie-parser - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
+multer - node.js 中间件，用于处理 enctype="multipart/form-data"（设置表单的MIME编码）的表单数据。
+   $ cnpm install body-parser --save
+   $ cnpm install cookie-parser --save
+   $ cnpm install multer --save
+安装完后，我们可以查看下 express 使用的版本号：
+   $ cnpm list express
+
+   [expresss](http://expressjs.com/)
+   [Express 4.x API 中文文档](https://www.runoob.com/w3cnote/express-4-x-api.html)
+   [Express 4.x API](http://expressjs.com/zh-cn/4x/api.html)
+
+## RESTful API
+   REST  
+   表述性状态传递（英文：Representational State Transfer，简称REST）是Roy Fielding博士在2000年他的博士论文中提出来的一种软件架构风格。
+   表述性状态转移是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。需要注意的是，REST是设计风格而不是标准。REST通常基于使用HTTP，URI，和XML（标准通用标记语言下的一个子集）以及HTML（标准通用标记语言下的一个应用）这些现有的广泛流行的协议和标准。REST 通常使用 JSON 数据格式。
+
+   HTTP 方法
+   以下为 REST 基本架构的四个方法：
+   * GET - 用于获取数据。
+   * PUT - 用于更新或添加数据。
+   * DELETE - 用于删除数据。
+   * POST - 用于添加数据。
+   
+   [RESTful架构详解](http://www.runoob.com/w3cnote/restful-architecture.html)
+
+## 多进程
+   我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。
+   每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。
+   Node 提供了 child_process 模块来创建子进程，方法有：
+   * exec - child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。
+   * spawn - child_process.spawn 使用指定的命令行参数创建新进程。
+   * fork - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork('./son.js') 相当于 spawn('node', ['./son.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+
+## JXcore 打包
+   Node.js 是一个开放源代码、跨平台的、用于服务器端和网络应用的运行环境。
+   JXcore 是一个支持多线程的 Node.js 发行版本，基本不需要对你现有的代码做任何改动就可以直接线程安全地以多线程运行。
+   [更多内容](http://jxcore.com/)
+   
+## MySQL
+   [MySQL教程](http://www.runoob.com/mysql/mysql-tutorial.html)
+
+## MongoDB
+   MongoDB是一种文档导向数据库管理系统，由C++撰写而成。
+   [关于MongDB](http://www.runoob.com/mongodb/mongodb-tutorial.html)
+
 ## 参考资料
 
 * [node英文网](https://nodejs.org/)
