@@ -2,8 +2,8 @@
 记录node.js学习历程、心得体会、收获
 
 ## node.js的安装
-node.js支持windows、linux、mac平台，node.js的安装有两种方式： 
-1）直接从官网下载安装，下载地址：http://nodejs.cn/download/  
+node.js支持windows、linux、mac平台，node.js的安装有两种方式：  
+1）直接从官网[下载](http://nodejs.cn/download/) 
 2）通过nvm安装 (*nvm install node_version*)
 
 *注意：Linux上安装Node.js需要安装Python 2.6 或 2.7，不建议安装Python 3.0以上版本。*
